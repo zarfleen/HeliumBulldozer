@@ -11,6 +11,7 @@ public class World {
 	List<Rectangle> collisionRects = new ArrayList<Rectangle>();
 	Player player;
 	Level level;
+	List<Actor> actors = new ArrayList<Actor>();
 	
 	public World() {
 		createWorld();
@@ -18,8 +19,10 @@ public class World {
 	
 	private void createWorld() {
 		this.player = new Player(new Vector2(7, 2));
-
 		this.level = new Level();
+		
+		this.actors.add(new Walker(new Vector2(17,2)));
+		this.actors.add(new Walker(new Vector2(27,2)));
 	}
 	
 	public List<Rectangle> getCollisionRects() {
@@ -32,6 +35,10 @@ public class World {
 	
 	public Level getLevel() {
 		return this.level;
+	}
+	
+	public List<Actor> getActors() {
+		return this.actors;
 	}
 	
 	public List<Block> getDrawableBlocks(int width, int height) {

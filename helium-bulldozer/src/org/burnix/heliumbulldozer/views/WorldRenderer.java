@@ -1,5 +1,6 @@
 package org.burnix.heliumbulldozer.views;
 
+import org.burnix.heliumbulldozer.models.Actor;
 import org.burnix.heliumbulldozer.models.Block;
 import org.burnix.heliumbulldozer.models.Player;
 import org.burnix.heliumbulldozer.models.World;
@@ -77,6 +78,12 @@ public class WorldRenderer {
 		Rectangle rect = player.bounds();
 		this.debugRenderer.setColor(new Color(0, 1, 0, 1));
 		this.debugRenderer.rect(rect.x, rect.y, rect.width, rect.height);
+
+		for(Actor actor : world.getActors()) {
+			rect = actor.bounds();
+			this.debugRenderer.setColor(new Color(0, 0, 1, 1));
+			this.debugRenderer.rect(rect.x, rect.y, rect.width, rect.height);
+		}
 		
 		this.debugRenderer.end();
 	}

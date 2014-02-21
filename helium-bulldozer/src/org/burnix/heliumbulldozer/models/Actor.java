@@ -2,7 +2,7 @@ package org.burnix.heliumbulldozer.models;
 
 import com.badlogic.gdx.math.Vector2;
 
-public abstract class Actor extends GameObject {
+public class Actor extends GameObject {
 	
 	public static final int STATE_IDLE = 0;
 	public static final int STATE_WALKING = 1;
@@ -14,16 +14,19 @@ public abstract class Actor extends GameObject {
 	
 	public Actor() {
 		super();
-		init();
+		initActor();
 	}
 	
 	public Actor(Vector2 position) {
 		super(position);
-		init();
+		initActor();
 	}
 	
-	protected void init() {
+	protected void initActor() {
 		setState(Actor.STATE_IDLE);
+		
+		this.width = 0.333f;
+		this.height = 0.6777f;		
 	}
 	
 	public void update(float delta) {

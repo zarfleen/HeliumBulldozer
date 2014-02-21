@@ -72,7 +72,13 @@ public class WorldController {
 			this.player.setState(Actor.STATE_IDLE);
 		}
 		
+		world.getCollisionRects().clear();
+		
 		updateActor(this.player, delta);
+		
+		for(Actor actor : this.world.getActors()) {
+			updateActor(actor, delta);
+		}
 	}
 	
 	protected void updateActor(Actor actor, float delta) {
@@ -82,7 +88,8 @@ public class WorldController {
 		
 		checkCollisionWithBlocks(actor, delta);
 		
-		actor.getVelocity().x *= DAMPEN;
+		if(actor == this.player)
+			actor.getVelocity().x *= DAMPEN;
 
 		if(actor.getVelocity().x > MAX_VELOCITY) {
 			actor.getVelocity().x = MAX_VELOCITY;
@@ -180,8 +187,7 @@ public class WorldController {
 	
 	private void checkCollisionWithBlocks(Actor actor, float delta) {
 		actor.getVelocity().scl(delta);
-		
-		world.getCollisionRects().clear();
+			
 		Rectangle actorRect = this.rectPool.obtain();
 		
 		///
@@ -205,8 +211,9 @@ public class WorldController {
 				continue;
 			
 			if(actorRect.overlaps(block.bounds())) {
-				if(actor.getVelocity().y < 0)
+				if(actor.getVelocity().y < 0 && actor == this.player) {
 					this.grounded = true;
+				}
 				actor.getVelocity().y = 0;
 				actor.getAcceleration().y = 0;
 				this.world.getCollisionRects().add(block.bounds());
@@ -237,7 +244,6 @@ public class WorldController {
 				break;
 			}
 		}
-		
 		
 		actor.getPosition().add(actor.getVelocity());
 		actor.getVelocity().scl(1 / delta);
